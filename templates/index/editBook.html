@@ -1,0 +1,44 @@
+{%extends 'index/public/base.html'%}
+{%block title%}
+图书管理系统 - 编辑图书
+{%endblock%}
+{%block main%}
+<br>
+<br>
+<br>
+<div class="col-md-6 col-md-offset-3">
+    <div class="panel panel-primary">
+        <div class="panel-heading">编辑书籍</div>
+        <!--编辑书籍表单-->
+        <form action="/index/editBook/" class="form-horizontal" method="post">
+            {% csrf_token %}
+            <input type="hidden" value="{{book_obj.id}}" name="id">
+            <div class="form-group">
+                <lable for="book_title" class="col-sm-2 control-label">书名</lable>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="book_title" name="book_title"
+                           value="{{book_obj.title}}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="publisher" class="col-sm-2 control-label">出版社</label>
+                <div class="col-sm-10">
+                    <select name="publisher" id="publisher">
+                        {%for publisher in publisher_list%}
+                        {%ifequal publisher.id book_obj.publisher%}
+                        <option value="{{publisher.id}}" selected>{{publisher.name}}</option>
+                        {%endifequal%}
+                        <option value="{{publisher.id}}">{{publisher.name}}</option>
+                        {%endfor%}
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <input type="submit" class="btn btn-success">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{%endblock%}
